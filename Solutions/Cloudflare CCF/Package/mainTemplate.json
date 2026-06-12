@@ -5261,140 +5261,140 @@
                   "Custom-CloudflareSecurityEvents_CL": {
                     "columns": [
                       {
-                        "name": "action",
+                        "name": "TimeGenerated",
+                        "type": "datetime"
+                      },
+                      {
+                        "name": "Action",
                         "type": "string"
                       },
                       {
-                        "name": "source",
+                        "name": "Source",
                         "type": "string"
                       },
                       {
-                        "name": "kind",
+                        "name": "Kind",
                         "type": "string"
                       },
                       {
-                        "name": "description",
+                        "name": "Description",
                         "type": "string"
                       },
                       {
-                        "name": "ref",
+                        "name": "Ref",
                         "type": "string"
                       },
                       {
-                        "name": "ruleId",
+                        "name": "RuleId",
                         "type": "string"
                       },
                       {
-                        "name": "rulesetId",
+                        "name": "RulesetId",
                         "type": "string"
                       },
                       {
-                        "name": "matchIndex",
+                        "name": "MatchIndex",
                         "type": "int"
                       },
                       {
-                        "name": "rayName",
+                        "name": "RayName",
                         "type": "string"
                       },
                       {
-                        "name": "originatorRayName",
+                        "name": "OriginatorRayName",
                         "type": "string"
                       },
                       {
-                        "name": "sampleInterval",
+                        "name": "SampleInterval",
                         "type": "int"
                       },
                       {
-                        "name": "clientIP",
+                        "name": "ClientIP",
                         "type": "string"
                       },
                       {
-                        "name": "clientIPClass",
+                        "name": "ClientIPClass",
                         "type": "string"
                       },
                       {
-                        "name": "clientAsn",
+                        "name": "ClientAsn",
                         "type": "string"
                       },
                       {
-                        "name": "clientASNDescription",
+                        "name": "ClientASNDescription",
                         "type": "string"
                       },
                       {
-                        "name": "clientCountryName",
+                        "name": "ClientCountryName",
                         "type": "string"
                       },
                       {
-                        "name": "clientRequestHTTPHost",
+                        "name": "ClientRequestHTTPHost",
                         "type": "string"
                       },
                       {
-                        "name": "clientRequestHTTPMethodName",
+                        "name": "ClientRequestHTTPMethodName",
                         "type": "string"
                       },
                       {
-                        "name": "clientRequestHTTPProtocol",
+                        "name": "ClientRequestHTTPProtocol",
                         "type": "string"
                       },
                       {
-                        "name": "clientRequestPath",
+                        "name": "ClientRequestPath",
                         "type": "string"
                       },
                       {
-                        "name": "clientRequestQuery",
+                        "name": "ClientRequestQuery",
                         "type": "string"
                       },
                       {
-                        "name": "clientRequestScheme",
+                        "name": "ClientRequestScheme",
                         "type": "string"
                       },
                       {
-                        "name": "clientRefererHost",
+                        "name": "ClientRefererHost",
                         "type": "string"
                       },
                       {
-                        "name": "clientRefererPath",
+                        "name": "ClientRefererPath",
                         "type": "string"
                       },
                       {
-                        "name": "clientRefererQuery",
+                        "name": "ClientRefererQuery",
                         "type": "string"
                       },
                       {
-                        "name": "clientRefererScheme",
+                        "name": "ClientRefererScheme",
                         "type": "string"
                       },
                       {
-                        "name": "userAgent",
+                        "name": "UserAgent",
                         "type": "string"
                       },
                       {
-                        "name": "edgeColoName",
+                        "name": "EdgeColoName",
                         "type": "string"
                       },
                       {
-                        "name": "edgeResponseStatus",
+                        "name": "EdgeResponseStatus",
                         "type": "int"
                       },
                       {
-                        "name": "originResponseStatus",
+                        "name": "OriginResponseStatus",
                         "type": "int"
                       },
                       {
-                        "name": "httpApplicationVersion",
+                        "name": "HttpApplicationVersion",
                         "type": "long"
                       },
                       {
-                        "name": "zoneTag",
+                        "name": "ZoneTag",
                         "type": "string"
                       },
                       {
-                        "name": "zoneVersion",
+                        "name": "ZoneVersion",
                         "type": "long"
-                      },
-                      {
-                        "name": "datetime",
-                        "type": "string"
                       }
                     ]
                   }
@@ -5415,7 +5415,7 @@
                     "destinations": [
                       "clv2ws1"
                     ],
-                    "transformKql": "source\n| project TimeGenerated = todatetime(['datetime']), Action = ['action'], Source = ['source'], Kind = ['kind'], Description = ['description'], Ref = ['ref'], RuleId = ['ruleId'], RulesetId = ['rulesetId'], MatchIndex = ['matchIndex'], RayName = ['rayName'], OriginatorRayName = ['originatorRayName'], SampleInterval = ['sampleInterval'], ClientIP = ['clientIP'], ClientIPClass = ['clientIPClass'], ClientAsn = ['clientAsn'], ClientASNDescription = ['clientASNDescription'], ClientCountryName = ['clientCountryName'], ClientRequestHTTPHost = ['clientRequestHTTPHost'], ClientRequestHTTPMethodName = ['clientRequestHTTPMethodName'], ClientRequestHTTPProtocol = ['clientRequestHTTPProtocol'], ClientRequestPath = ['clientRequestPath'], ClientRequestQuery = ['clientRequestQuery'], ClientRequestScheme = ['clientRequestScheme'], ClientRefererHost = ['clientRefererHost'], ClientRefererPath = ['clientRefererPath'], ClientRefererQuery = ['clientRefererQuery'], ClientRefererScheme = ['clientRefererScheme'], UserAgent = ['userAgent'], EdgeColoName = ['edgeColoName'], EdgeResponseStatus = ['edgeResponseStatus'], OriginResponseStatus = ['originResponseStatus'], HttpApplicationVersion = ['httpApplicationVersion'], ZoneTag = ['zoneTag'], ZoneVersion = ['zoneVersion']",
+                    "transformKql": "source",
                     "outputStream": "Custom-CloudflareSecurityEvents_CL"
                   }
                 ]
@@ -5885,7 +5885,7 @@
                     "User-Agent": "Scuba"
                   },
                   "isPostPayloadJson": true,
-                  "queryParametersTemplate": "[[concat('{\"query\":\"{ viewer { accounts(filter: {accountTag: \\\"', parameters('accountId'), '\\\"}) { firewallEventsAdaptive(filter: {datetime_geq: \\\"{_QueryWindowStartTime}\\\", datetime_leq: \\\"{_QueryWindowEndTime}\\\"}, limit: 10000, orderBy: [datetime_ASC]) { action source kind description ref ruleId rulesetId matchIndex rayName originatorRayName sampleInterval clientIP clientIPClass clientAsn clientASNDescription clientCountryName clientRequestHTTPHost clientRequestHTTPMethodName clientRequestHTTPProtocol clientRequestPath clientRequestQuery clientRequestScheme clientRefererHost clientRefererPath clientRefererQuery clientRefererScheme userAgent edgeColoName edgeResponseStatus originResponseStatus httpApplicationVersion zoneTag zoneVersion datetime } } } }\"}')]"
+                  "queryParametersTemplate": "[[concat('{\"query\":\"{ viewer { accounts(filter: {accountTag: \\\"', parameters('accountId'), '\\\"}) { firewallEventsAdaptive(filter: {datetime_geq: \\\"{_QueryWindowStartTime}\\\", datetime_leq: \\\"{_QueryWindowEndTime}\\\"}, limit: 10000, orderBy: [datetime_ASC]) { TimeGenerated: datetime, Action: action, Source: source, Kind: kind, Description: description, Ref: ref, RuleId: ruleId, RulesetId: rulesetId, MatchIndex: matchIndex, RayName: rayName, OriginatorRayName: originatorRayName, SampleInterval: sampleInterval, ClientIP: clientIP, ClientIPClass: clientIPClass, ClientAsn: clientAsn, ClientASNDescription: clientASNDescription, ClientCountryName: clientCountryName, ClientRequestHTTPHost: clientRequestHTTPHost, ClientRequestHTTPMethodName: clientRequestHTTPMethodName, ClientRequestHTTPProtocol: clientRequestHTTPProtocol, ClientRequestPath: clientRequestPath, ClientRequestQuery: clientRequestQuery, ClientRequestScheme: clientRequestScheme, ClientRefererHost: clientRefererHost, ClientRefererPath: clientRefererPath, ClientRefererQuery: clientRefererQuery, ClientRefererScheme: clientRefererScheme, UserAgent: userAgent, EdgeColoName: edgeColoName, EdgeResponseStatus: edgeResponseStatus, OriginResponseStatus: originResponseStatus, HttpApplicationVersion: httpApplicationVersion, ZoneTag: zoneTag, ZoneVersion: zoneVersion } } } }\"}')]"
                 },
                 "response": {
                   "eventsJsonPaths": [
@@ -8077,7 +8077,7 @@
         "contentSchemaVersion": "3.0.0",
         "displayName": "Cloudflare CCF",
         "publisherDisplayName": "Cloudflare",
-        "descriptionHtml": "<p><strong>Note:</strong> Please refer to the following before installing the solution:</p>\n<p>• Review the solution <a href=\"https://github.com/Azure/Azure-Sentinel/tree/master/Solutions/Cloudflare%20CCF/ReleaseNotes.md\">Release Notes</a></p>\n<p>• There may be <a href=\"https://aka.ms/sentinelsolutionsknownissues\">known issues</a> pertaining to this Solution, please refer to them before installing.</p>\n<p>The <a href=\"https://www.cloudflare.com/\">Cloudflare</a> solution provides the capability to ingest <a href=\"https://developers.cloudflare.com/logs/\">Cloudflare logs</a> into Microsoft Sentinel using the Codeless Connector Framework (CCF) and Azure Blob Storage. Refer to <a href=\"https://developers.cloudflare.com/logs/about/\">Cloudflare documentation</a> for more information.</p>\n<p><strong>Underlying Microsoft Technologies used:</strong></p>\n<ol type=\"a\">\n<li><p><a href=\"https://learn.microsoft.com/en-us/azure/sentinel/create-codeless-connector\">Codeless Connector Framework</a></p>\n</li>\n<li><p><a href=\"https://docs.microsoft.com/azure/azure-monitor/logs/data-collector-api\">Azure Monitor HTTP Data Collector API</a> (for reference, legacy support)</p>\n</li>\n</ol>\n<p><strong>Data Connectors:</strong> 2, <strong>Parsers:</strong> 1, <strong>Workbooks:</strong> 1, <strong>Analytic Rules:</strong> 10, <strong>Hunting Queries:</strong> 10</p>\n<p><a href=\"https://aka.ms/azuresentinel\">Learn more about Microsoft Sentinel</a> | <a href=\"https://aka.ms/azuresentinelsolutionsdoc\">Learn more about Solutions</a></p>\n",
+        "descriptionHtml": "<p><strong>Note:</strong> Please refer to the following before installing the solution:</p>\n<p>\u2022 Review the solution <a href=\"https://github.com/Azure/Azure-Sentinel/tree/master/Solutions/Cloudflare%20CCF/ReleaseNotes.md\">Release Notes</a></p>\n<p>\u2022 There may be <a href=\"https://aka.ms/sentinelsolutionsknownissues\">known issues</a> pertaining to this Solution, please refer to them before installing.</p>\n<p>The <a href=\"https://www.cloudflare.com/\">Cloudflare</a> solution provides the capability to ingest <a href=\"https://developers.cloudflare.com/logs/\">Cloudflare logs</a> into Microsoft Sentinel using the Codeless Connector Framework (CCF) and Azure Blob Storage. Refer to <a href=\"https://developers.cloudflare.com/logs/about/\">Cloudflare documentation</a> for more information.</p>\n<p><strong>Underlying Microsoft Technologies used:</strong></p>\n<ol type=\"a\">\n<li><p><a href=\"https://learn.microsoft.com/en-us/azure/sentinel/create-codeless-connector\">Codeless Connector Framework</a></p>\n</li>\n<li><p><a href=\"https://docs.microsoft.com/azure/azure-monitor/logs/data-collector-api\">Azure Monitor HTTP Data Collector API</a> (for reference, legacy support)</p>\n</li>\n</ol>\n<p><strong>Data Connectors:</strong> 2, <strong>Parsers:</strong> 1, <strong>Workbooks:</strong> 1, <strong>Analytic Rules:</strong> 10, <strong>Hunting Queries:</strong> 10</p>\n<p><a href=\"https://aka.ms/azuresentinel\">Learn more about Microsoft Sentinel</a> | <a href=\"https://aka.ms/azuresentinelsolutionsdoc\">Learn more about Solutions</a></p>\n",
         "contentKind": "Solution",
         "contentProductId": "[variables('_solutioncontentProductId')]",
         "id": "[variables('_solutioncontentProductId')]",
