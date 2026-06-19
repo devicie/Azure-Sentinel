@@ -1,0 +1,117 @@
+{
+  "name": "CloudflareSecurityEventsDefinition",
+  "apiVersion": "2025-07-01-preview",
+  "type": "Microsoft.SecurityInsights/dataConnectorDefinitions",
+  "location": "{{location}}",
+  "kind": "Customizable",
+  "properties": {
+    "connectorUiConfig": {
+      "id": "CloudflareSecurityEventsDefinition",
+      "title": "Cloudflare Security Events (via Codeless Connector Framework)",
+      "publisher": "Cloudflare",
+      "descriptionMarkdown": "The [Cloudflare](https://www.cloudflare.com/) Security Events connector ingests Cloudflare [security events](https://developers.cloudflare.com/waf/analytics/security-events/) into Microsoft Sentinel using the Cloudflare [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api/) (the `firewallEventsAdaptive` dataset, queried at account scope).\n\nSecurity events capture requests acted on by Cloudflare security products, including the WAF managed and custom rulesets, rate limiting, L7 DDoS mitigation, IP reputation, and bot mitigations.\n\n**Underlying Microsoft Technologies used:**\n\nThis solution takes a dependency on the following technologies, and some of these dependencies either may be in Preview state or might result in additional ingestion or operational costs:\n\na. [Codeless Connector Framework (CCF)](https://learn.microsoft.com/en-us/azure/sentinel/create-custom-connector)",
+      "graphQueriesTableName": "CloudflareSecurityEvents_CL",
+      "graphQueries": [
+        {
+          "metricName": "Total events received",
+          "legend": "Cloudflare Security Events",
+          "baseQuery": "{{graphQueriesTableName}}"
+        }
+      ],
+      "sampleQueries": [
+        {
+          "description": "Get sample Cloudflare Security Events",
+          "query": "{{graphQueriesTableName}}\n | take 10"
+        },
+        {
+          "description": "Cloudflare Security Events by action",
+          "query": "{{graphQueriesTableName}}\n | summarize count() by Action"
+        },
+        {
+          "description": "Top client IPs blocked by the Cloudflare WAF",
+          "query": "{{graphQueriesTableName}}\n | where Action == 'block'\n | summarize count() by ClientIP\n | top 10 by count_"
+        }
+      ],
+      "dataTypes": [
+        {
+          "name": "CloudflareSecurityEvents_CL",
+          "lastDataReceivedQuery": "{{graphQueriesTableName}}\n | where TimeGenerated > ago(12h) | summarize Time = max(TimeGenerated)\n | where isnotempty(Time)"
+        }
+      ],
+      "connectivityCriteria": [
+        {
+          "type": "HasDataConnectors"
+        }
+      ],
+      "availability": {
+        "isPreview": true,
+        "status": 1
+      },
+      "permissions": {
+        "resourceProvider": [
+          {
+            "provider": "Microsoft.OperationalInsights/workspaces",
+            "permissionsDisplayText": "Read and Write permissions are required.",
+            "providerDisplayName": "Workspace",
+            "scope": "Workspace",
+            "requiredPermissions": {
+              "read": true,
+              "write": true,
+              "delete": true,
+              "action": false
+            }
+          }
+        ],
+        "customs": [
+          {
+            "name": "Cloudflare Account API token",
+            "description": "A Cloudflare Account API token with **Account Analytics > Read** permission is required to query the GraphQL Analytics API. Refer to the [Cloudflare documentation](https://developers.cloudflare.com/fundamentals/api/get-started/account-owned-tokens/) for instructions on creating an account-owned API token."
+          },
+          {
+            "name": "Cloudflare Account ID",
+            "description": "Your Cloudflare Account ID is available in the Cloudflare dashboard URL or under **Account Home > Overview**. Refer to the [Cloudflare documentation](https://developers.cloudflare.com/fundamentals/setup/find-account-and-zone-ids/) for instructions."
+          }
+        ]
+      },
+      "instructionSteps": [
+        {
+          "title": "Connect Cloudflare Security Events to Microsoft Sentinel",
+          "description": "To enable ingestion of Cloudflare security events, provide your Cloudflare Account ID and Cloudflare Account API token below, then select **Connect**.\n\n> **Note:** Ensure your API token has the **Account Analytics > Read** permission scope. Security events are collected across all zones in the account.",
+          "instructions": [
+            {
+              "type": "Textbox",
+              "parameters": {
+                "label": "Cloudflare Account ID",
+                "placeholder": "Enter your Cloudflare Account ID (e.g. 9a7806061c88ada191ed06f989cc3dac)",
+                "type": "text",
+                "name": "accountId",
+                "validations": {
+                  "required": true
+                }
+              }
+            },
+            {
+              "type": "Textbox",
+              "parameters": {
+                "label": "Cloudflare Account API token",
+                "placeholder": "Enter your Cloudflare Account API token",
+                "type": "password",
+                "name": "apikey",
+                "validations": {
+                  "required": true
+                }
+              }
+            },
+            {
+              "type": "ConnectionToggleButton",
+              "parameters": {
+                "connectLabel": "Connect",
+                "name": "Connect"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

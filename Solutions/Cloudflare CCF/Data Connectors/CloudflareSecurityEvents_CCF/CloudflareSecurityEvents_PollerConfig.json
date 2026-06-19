@@ -1,0 +1,46 @@
+[
+  {
+    "name": "CloudflareSecurityEventsPoller",
+    "apiVersion": "2025-03-01",
+    "type": "Microsoft.SecurityInsights/dataConnectors",
+    "location": "{{location}}",
+    "kind": "RestApiPoller",
+    "properties": {
+      "connectorDefinitionName": "CloudflareSecurityEventsDefinition",
+      "dataType": "CloudflareSecurityEvents_CL",
+      "dcrConfig": {
+        "streamName": "Custom-CloudflareSecurityEvents_CL",
+        "dataCollectionEndpoint": "{{dataCollectionEndpoint}}",
+        "dataCollectionRuleImmutableId": "{{dataCollectionRuleImmutableId}}"
+      },
+      "auth": {
+        "type": "APIKey",
+        "ApiKey": "[[parameters('apikey')]",
+        "ApiKeyName": "Authorization",
+        "ApiKeyIdentifier": "Bearer"
+      },
+      "request": {
+        "apiEndpoint": "https://api.cloudflare.com/client/v4/graphql",
+        "httpMethod": "POST",
+        "queryWindowInMin": 10,
+        "queryTimeFormat": "yyyy-MM-ddTHH:mm:ssZ",
+        "rateLimitQPS": 5,
+        "retryCount": 3,
+        "timeoutInSeconds": 60,
+        "headers": {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "User-Agent": "Scuba"
+        },
+        "isPostPayloadJson": true,
+        "queryParametersTemplate": "[[concat('{\"query\":\"{ viewer { accounts(filter: {accountTag: \\\"', parameters('accountId'), '\\\"}) { firewallEventsAdaptive(filter: {datetime_geq: \\\"{_QueryWindowStartTime}\\\", datetime_leq: \\\"{_QueryWindowEndTime}\\\"}, limit: 10000, orderBy: [datetime_ASC]) { datetime, action, source, kind, description, ref, ruleId, rulesetId, matchIndex, rayName, originatorRayName, sampleInterval, clientIP, clientIPClass, clientAsn, clientASNDescription, clientCountryName, clientRequestHTTPHost, clientRequestHTTPMethodName, clientRequestHTTPProtocol, clientRequestPath, clientRequestQuery, clientRequestScheme, clientRefererHost, clientRefererPath, clientRefererQuery, clientRefererScheme, userAgent, edgeColoName, edgeResponseStatus, originResponseStatus, httpApplicationVersion, zoneTag, zoneVersion } } } }\"}')]"
+      },
+      "response": {
+        "eventsJsonPaths": [
+          "$.data.viewer.accounts[0].firewallEventsAdaptive"
+        ],
+        "format": "json"
+      }
+    }
+  }
+]
