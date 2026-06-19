@@ -10,139 +10,139 @@
         "Custom-CloudflareSecurityEvents_CL": {
           "columns": [
             {
-              "name": "TimeGenerated",
+              "name": "datetime",
               "type": "datetime"
             },
             {
-              "name": "Action",
+              "name": "action",
               "type": "string"
             },
             {
-              "name": "Source",
+              "name": "source",
               "type": "string"
             },
             {
-              "name": "Kind",
+              "name": "kind",
               "type": "string"
             },
             {
-              "name": "Description",
+              "name": "description",
               "type": "string"
             },
             {
-              "name": "Ref",
+              "name": "ref",
               "type": "string"
             },
             {
-              "name": "RuleId",
+              "name": "ruleId",
               "type": "string"
             },
             {
-              "name": "RulesetId",
+              "name": "rulesetId",
               "type": "string"
             },
             {
-              "name": "MatchIndex",
+              "name": "matchIndex",
               "type": "int"
             },
             {
-              "name": "RayName",
+              "name": "rayName",
               "type": "string"
             },
             {
-              "name": "OriginatorRayName",
+              "name": "originatorRayName",
               "type": "string"
             },
             {
-              "name": "SampleInterval",
+              "name": "sampleInterval",
               "type": "int"
             },
             {
-              "name": "ClientIP",
+              "name": "clientIP",
               "type": "string"
             },
             {
-              "name": "ClientIPClass",
+              "name": "clientIPClass",
               "type": "string"
             },
             {
-              "name": "ClientAsn",
+              "name": "clientAsn",
               "type": "string"
             },
             {
-              "name": "ClientASNDescription",
+              "name": "clientASNDescription",
               "type": "string"
             },
             {
-              "name": "ClientCountryName",
+              "name": "clientCountryName",
               "type": "string"
             },
             {
-              "name": "ClientRequestHTTPHost",
+              "name": "clientRequestHTTPHost",
               "type": "string"
             },
             {
-              "name": "ClientRequestHTTPMethodName",
+              "name": "clientRequestHTTPMethodName",
               "type": "string"
             },
             {
-              "name": "ClientRequestHTTPProtocol",
+              "name": "clientRequestHTTPProtocol",
               "type": "string"
             },
             {
-              "name": "ClientRequestPath",
+              "name": "clientRequestPath",
               "type": "string"
             },
             {
-              "name": "ClientRequestQuery",
+              "name": "clientRequestQuery",
               "type": "string"
             },
             {
-              "name": "ClientRequestScheme",
+              "name": "clientRequestScheme",
               "type": "string"
             },
             {
-              "name": "ClientRefererHost",
+              "name": "clientRefererHost",
               "type": "string"
             },
             {
-              "name": "ClientRefererPath",
+              "name": "clientRefererPath",
               "type": "string"
             },
             {
-              "name": "ClientRefererQuery",
+              "name": "clientRefererQuery",
               "type": "string"
             },
             {
-              "name": "ClientRefererScheme",
+              "name": "clientRefererScheme",
               "type": "string"
             },
             {
-              "name": "UserAgent",
+              "name": "userAgent",
               "type": "string"
             },
             {
-              "name": "EdgeColoName",
+              "name": "edgeColoName",
               "type": "string"
             },
             {
-              "name": "EdgeResponseStatus",
+              "name": "edgeResponseStatus",
               "type": "int"
             },
             {
-              "name": "OriginResponseStatus",
+              "name": "originResponseStatus",
               "type": "int"
             },
             {
-              "name": "HttpApplicationVersion",
+              "name": "httpApplicationVersion",
               "type": "long"
             },
             {
-              "name": "ZoneTag",
+              "name": "zoneTag",
               "type": "string"
             },
             {
-              "name": "ZoneVersion",
+              "name": "zoneVersion",
               "type": "long"
             }
           ]
@@ -164,7 +164,7 @@
           "destinations": [
             "clv2ws1"
           ],
-          "transformKql": "source",
+          "transformKql": "source | project-rename TimeGenerated = ['datetime'], Action = action, Source = ['source'], Kind = ['kind'], Description = description, Ref = ref, RuleId = ruleId, RulesetId = rulesetId, MatchIndex = matchIndex, RayName = rayName, OriginatorRayName = originatorRayName, SampleInterval = sampleInterval, ClientIP = clientIP, ClientIPClass = clientIPClass, ClientAsn = clientAsn, ClientASNDescription = clientASNDescription, ClientCountryName = clientCountryName, ClientRequestHTTPHost = clientRequestHTTPHost, ClientRequestHTTPMethodName = clientRequestHTTPMethodName, ClientRequestHTTPProtocol = clientRequestHTTPProtocol, ClientRequestPath = clientRequestPath, ClientRequestQuery = clientRequestQuery, ClientRequestScheme = clientRequestScheme, ClientRefererHost = clientRefererHost, ClientRefererPath = clientRefererPath, ClientRefererQuery = clientRefererQuery, ClientRefererScheme = clientRefererScheme, UserAgent = userAgent, EdgeColoName = edgeColoName, EdgeResponseStatus = edgeResponseStatus, OriginResponseStatus = originResponseStatus, HttpApplicationVersion = httpApplicationVersion, ZoneTag = zoneTag, ZoneVersion = zoneVersion",
           "outputStream": "Custom-CloudflareSecurityEvents_CL"
         }
       ]
